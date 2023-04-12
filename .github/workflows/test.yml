@@ -26,6 +26,9 @@ jobs:
               
             - name: Get WP-CLI version
               run: wp --version > ${{ vars.RUNNER_TEMP }}/wpcli-version.txt
+              
+            - name: Test
+              run: echo "${{ vars.RUNNER_TEMP }}/wpcli-commands.json"
 
             - name: Ingest WP-CLI Commands List
               run: cd cli && composer install && ./bin/docsdangit ingest -s wp-cli -dp ${{ vars.RUNNER_TEMP }}/wpcli-commands.json -vp ${{ vars.RUNNER_TEMP }}/wpcli-version.txt
