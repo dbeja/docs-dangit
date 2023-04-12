@@ -22,10 +22,10 @@ jobs:
                   tools: wp-cli, composer
 
             - name: Generate WP-CLI Commands List
-              run: wp cli cmd-dump > ${{ github.workspace }}/cli/data/wpcli-commands.json
+              run: wp cli cmd-dump > ${{ vars.RUNNER_TEMP }}/wpcli-commands.json
               
             - name: Get WP-CLI version
-              run: wp --version > ${{ github.workspace }}/cli/data/wpcli-version.txt
+              run: wp --version > ${{ vars.RUNNER_TEMP }}/wpcli-version.txt
 
             - name: Ingest WP-CLI Commands List
-              run: cd cli && composer install && ./bin/docsdangit ingest -s wp-cli
+              run: cd cli && composer install && ./bin/docsdangit ingest -s wp-cli -dp ${{ vars.RUNNER_TEMP }}/wpcli-commands.json -vp ${{ vars.RUNNER_TEMP }}/wpcli-version.txt
